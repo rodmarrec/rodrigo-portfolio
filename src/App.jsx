@@ -4,6 +4,11 @@ import Header from './components/Header'
 import FilterBar from './components/FilterBar'
 import ProjectCard from './components/ProjectCard'
 import ProjectModal from './components/ProjectModal'
+import habitTracker from './assets/habit-tracker.png'
+import lastTransmission from './assets/last-transmission.png'
+import travelArcade from './assets/travel-arcade.png'
+import fplForm from './assets/fpl-form.png'
+import fplStats from './assets/fpl-stats.png'
 import './App.css'
 
 export const projects = [
@@ -16,7 +21,7 @@ export const projects = [
     tooling: 'Claude.ai + Airtable MCP, Omni',
     inProgress: false,
     group: null,
-    screenshot: '/src/assets/habit-tracker.png',
+    screenshot: habitTracker,
   },
   {
     id: 2,
@@ -27,7 +32,7 @@ export const projects = [
     tooling: 'Claude.ai + Airtable MCP, Claude Code, AI Fields',
     inProgress: false,
     group: null,
-    screenshot: '/src/assets/last-transmission.png',
+    screenshot: lastTransmission,
   },
   {
     id: 3,
@@ -38,7 +43,7 @@ export const projects = [
     tooling: 'Claude.ai + Airtable MCP, Omni',
     inProgress: true,
     group: null,
-    screenshot: '/src/assets/travel-arcade.png',
+    screenshot: travelArcade,
   },
   {
     id: 4,
@@ -50,7 +55,7 @@ export const projects = [
     inProgress: false,
     group: 'FPL Engine',
     groupIndex: 1,
-    screenshot: '/src/assets/fpl-form.png',
+    screenshot: fplForm,
   },
   {
     id: 5,
@@ -62,7 +67,7 @@ export const projects = [
     inProgress: false,
     group: 'FPL Engine',
     groupIndex: 2,
-    screenshot: '/src/assets/fpl-stats.png',
+    screenshot: fplStats,
   },
 ]
 
