@@ -38,18 +38,8 @@ export default function ProjectCard({ project, index, onClick }) {
             <div className="thumb-icon">{getIcon(tags)}</div>
           </div>
         )}
-
         <div className="card-overlay">
           <span className="overlay-cta">View Interface</span>
-        </div>
-
-        <div className="card-badges">
-          {group && (
-            <span className="badge-group">{group} {groupIndex}/2</span>
-          )}
-          {inProgress && (
-            <span className="badge-progress">In Progress</span>
-          )}
         </div>
       </div>
 
@@ -61,7 +51,19 @@ export default function ProjectCard({ project, index, onClick }) {
             <span key={tag} className="tag">{tag}</span>
           ))}
         </div>
-        <div className="card-tooling">{tooling}</div>
+        <div className="card-footer-row">
+          <div className="card-tooling">{tooling}</div>
+          {(group || inProgress) && (
+            <div className="card-badges">
+              {group && (
+                <span className="badge-group">{group} {groupIndex}/2</span>
+              )}
+              {inProgress && (
+                <span className="badge-progress">In Progress</span>
+              )}
+            </div>
+          )}
+        </div>
       </div>
     </motion.article>
   )

@@ -663,3 +663,25 @@ body {
   .bio { padding: 0 24px 48px; }
   .bio-inner { grid-template-columns: 1fr; gap: 16px; padding: 24px; }
 }
+
+/* ── Card footer row ── */
+.card-footer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+
+.card-footer-row .card-tooling {
+  padding-top: 0;
+  border-top: none;
+  flex: 1;
+}
+
+.card-footer-row .card-badges {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
