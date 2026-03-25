@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 
-export default function Header({ projectCount, tagCount }) {
+export default function Header() {
   return (
     <motion.header
       className="header"
@@ -19,25 +19,6 @@ export default function Header({ projectCount, tagCount }) {
         No-code interfaces built with Airtable + Claude —
         dashboards, games, trackers, and tools that make data feel alive.
       </p>
-
-      <div className="header-stats">
-        <div className="stat">
-          <span className="stat-num">{projectCount}</span>
-          <span className="stat-label">Interfaces</span>
-        </div>
-        <div className="stat">
-          <span className="stat-num">{tagCount}</span>
-          <span className="stat-label">Categories</span>
-        </div>
-        <div className="stat">
-          <span className="stat-num">493</span>
-          <span className="stat-label">Story Paths</span>
-        </div>
-        <div className="stat">
-          <span className="stat-num">∞</span>
-          <span className="stat-label">More to come</span>
-        </div>
-      </div>
     </motion.header>
   )
 }
