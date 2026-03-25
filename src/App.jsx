@@ -16,7 +16,7 @@ export const projects = [
     tooling: 'Claude.ai + Airtable MCP, Omni',
     inProgress: false,
     group: null,
-    screenshot: null,
+    screenshot: '/src/assets/habit-tracker.png',
   },
   {
     id: 2,
@@ -27,7 +27,7 @@ export const projects = [
     tooling: 'Claude.ai + Airtable MCP, Claude Code, AI Fields',
     inProgress: false,
     group: null,
-    screenshot: null,
+    screenshot: '/src/assets/last-transmission.png',
   },
   {
     id: 3,
@@ -38,7 +38,7 @@ export const projects = [
     tooling: 'Claude.ai + Airtable MCP, Omni',
     inProgress: true,
     group: null,
-    screenshot: null,
+    screenshot: '/src/assets/travel-arcade.png',
   },
   {
     id: 4,
@@ -50,7 +50,7 @@ export const projects = [
     inProgress: false,
     group: 'FPL Engine',
     groupIndex: 1,
-    screenshot: null,
+    screenshot: '/src/assets/fpl-form.png',
   },
   {
     id: 5,
@@ -62,7 +62,7 @@ export const projects = [
     inProgress: false,
     group: 'FPL Engine',
     groupIndex: 2,
-    screenshot: null,
+    screenshot: '/src/assets/fpl-stats.png',
   },
 ]
 
