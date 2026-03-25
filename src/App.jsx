@@ -12,6 +12,8 @@ const lastTransmission = new URL('./assets/last-transmission.png', import.meta.u
 const travelArcade = new URL('./assets/travel-arcade.png', import.meta.url).href
 const fplForm = new URL('./assets/fpl-form.png', import.meta.url).href
 const fplStats = new URL('./assets/fpl-stats.png', import.meta.url).href
+const heroscapeDark = new URL('./assets/heroscape-dark.png', import.meta.url).href
+const heroscapeLight = new URL('./assets/heroscape-light.png', import.meta.url).href
 
 export const projects = [
   {
@@ -29,7 +31,7 @@ export const projects = [
     id: 2,
     title: 'Last Transmission',
     description: 'A solo branching narrative game built entirely in Airtable — 493 unique story paths carved through a single interface using AI-powered fields and logic.',
-    tags: ['Game'],
+    tags: ['Gaming'],
     embed: 'https://airtable.com/embed/appA1vgLoApdC9wL1/shrK7dwmjDTJgoX0V',
     tooling: 'Claude.ai + Airtable MCP, Claude Code, AI Fields',
     inProgress: false,
@@ -71,9 +73,33 @@ export const projects = [
     groupIndex: 2,
     screenshot: fplStats,
   },
+  {
+    id: 6,
+    title: 'Heroscape Card Index · Dark',
+    description: 'A searchable card explorer for Heroscape — browse all 72 units by species, sort by attack, defense, move, and range, and dig into every card\'s stats and abilities.',
+    tags: ['Gaming', 'Dashboard'],
+    embed: 'https://airtable.com/embed/appwlovPBiGH0aj7S/shrSKgxrGhO6KP1db',
+    tooling: 'Airtable',
+    inProgress: false,
+    group: 'Heroscape Card Index',
+    groupIndex: 1,
+    screenshot: heroscapeDark,
+  },
+  {
+    id: 7,
+    title: 'Heroscape Card Index · Light',
+    description: 'A searchable card explorer for Heroscape — browse all 72 units by species, sort by attack, defense, move, and range, and dig into every card\'s stats and abilities.',
+    tags: ['Gaming', 'Dashboard'],
+    embed: 'https://airtable.com/embed/appwlovPBiGH0aj7S/shriZGFXjY0lmkQZV',
+    tooling: 'Airtable',
+    inProgress: false,
+    group: 'Heroscape Card Index',
+    groupIndex: 2,
+    screenshot: heroscapeLight,
+  },
 ]
 
-const allTags = ['All', 'Dashboard', 'Game', 'Personal', 'Sports']
+const allTags = ['All', 'Dashboard', 'Gaming', 'Personal', 'Sports']
 
 export default function App() {
   const [activeTag, setActiveTag] = useState('All')
