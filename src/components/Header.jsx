@@ -1,9 +1,6 @@
 import { motion } from 'framer-motion'
-import { projects } from '../App'
 
-const allTags = new Set(projects.flatMap(p => p.tags))
-
-export default function Header() {
+export default function Header({ projectCount, tagCount }) {
   return (
     <motion.header
       className="header"
@@ -25,11 +22,11 @@ export default function Header() {
 
       <div className="header-stats">
         <div className="stat">
-          <span className="stat-num">{projects.length}</span>
+          <span className="stat-num">{projectCount}</span>
           <span className="stat-label">Interfaces</span>
         </div>
         <div className="stat">
-          <span className="stat-num">{allTags.size}</span>
+          <span className="stat-num">{tagCount}</span>
           <span className="stat-label">Categories</span>
         </div>
         <div className="stat">

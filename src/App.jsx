@@ -83,7 +83,7 @@ export default function App() {
       <div className="bg-glow glow-2" />
       <div className="bg-glow glow-3" />
 
-      <Header />
+      <Header projectCount={projects.length} tagCount={new Set(projects.flatMap(p => p.tags)).size} />
 
       <main className="main">
         <FilterBar tags={allTags} activeTag={activeTag} onSelect={setActiveTag} />
