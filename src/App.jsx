@@ -14,21 +14,11 @@ const fplForm = new URL('./assets/fpl-form.png', import.meta.url).href
 const fplStats = new URL('./assets/fpl-stats.png', import.meta.url).href
 const heroscapeDark = new URL('./assets/heroscape-dark.png', import.meta.url).href
 const heroscapeLight = new URL('./assets/heroscape-light.png', import.meta.url).href
+const baseHub = new URL('./assets/Base_Hub.png', import.meta.url).href
 
 export const projects = [
   {
     id: 1,
-    title: 'Gamified Habit Tracker',
-    description: 'A neon-lit dashboard that turns daily habits into a visual game — track streaks, spot patterns, and measure progress across custom habits by day, month, and all time.',
-    tags: ['Dashboard', 'Personal'],
-    embed: 'https://airtable.com/embed/appVyoQ9indNlFJ8Q/shrcffXwnztIM2fUk',
-    tooling: 'Claude.ai + Airtable MCP, Omni',
-    inProgress: false,
-    group: null,
-    screenshot: habitTracker,
-  },
-  {
-    id: 2,
     title: 'Last Transmission',
     description: 'A solo branching narrative game built entirely in Airtable — 493 unique story paths carved through a single interface using AI-powered fields and logic.',
     tags: ['Gaming'],
@@ -37,6 +27,17 @@ export const projects = [
     inProgress: false,
     group: null,
     screenshot: lastTransmission,
+  },
+  {
+    id: 2,
+    title: 'Base Hub',
+    description: 'Mission control for Rodrigo\'s Airtable universe. 25 nodes registered across 8 classifications — track what\'s active, what\'s archived, and what each base was built to do.',
+    tags: ['Dashboard'],
+    embed: 'https://airtable.com/embed/appS9d0XHoJeUFGMi/shrCVIkigswaHQLJe',
+    tooling: 'Claude.ai + Airtable MCP',
+    inProgress: false,
+    group: null,
+    screenshot: baseHub,
   },
   {
     id: 3,
@@ -51,15 +52,14 @@ export const projects = [
   },
   {
     id: 4,
-    title: 'FPL Engine · Player Form',
-    description: 'Tracks Fantasy Premier League player form over time — compare current form against season averages, organized by club, to give your transfers an edge.',
-    tags: ['Sports', 'Dashboard'],
-    embed: 'https://airtable.com/embed/app2Ut7BDlgn1GR5F/shr0tEOzrWBNxgrJz',
-    tooling: 'Airtable',
+    title: 'Gamified Habit Tracker',
+    description: 'A neon-lit dashboard that turns daily habits into a visual game — track streaks, spot patterns, and measure progress across custom habits by day, month, and all time.',
+    tags: ['Dashboard', 'Personal'],
+    embed: 'https://airtable.com/embed/appVyoQ9indNlFJ8Q/shrcffXwnztIM2fUk',
+    tooling: 'Claude.ai + Airtable MCP, Omni',
     inProgress: false,
-    group: 'FPL Engine',
-    groupIndex: 1,
-    screenshot: fplForm,
+    group: null,
+    screenshot: habitTracker,
   },
   {
     id: 5,
@@ -75,6 +75,18 @@ export const projects = [
   },
   {
     id: 6,
+    title: 'FPL Engine · Player Form',
+    description: 'Tracks Fantasy Premier League player form over time — compare current form against season averages, organized by club, to give your transfers an edge.',
+    tags: ['Sports', 'Dashboard'],
+    embed: 'https://airtable.com/embed/app2Ut7BDlgn1GR5F/shr0tEOzrWBNxgrJz',
+    tooling: 'Airtable',
+    inProgress: false,
+    group: 'FPL Engine',
+    groupIndex: 1,
+    screenshot: fplForm,
+  },
+  {
+    id: 7,
     title: 'Heroscape Card Index · Dark',
     description: 'A searchable card explorer for Heroscape — browse all 72 units by species, sort by attack, defense, move, and range, and dig into every card\'s stats and abilities.',
     tags: ['Gaming', 'Dashboard'],
@@ -86,7 +98,7 @@ export const projects = [
     screenshot: heroscapeDark,
   },
   {
-    id: 7,
+    id: 8,
     title: 'Heroscape Card Index · Light',
     description: 'A searchable card explorer for Heroscape — browse all 72 units by species, sort by attack, defense, move, and range, and dig into every card\'s stats and abilities.',
     tags: ['Gaming', 'Dashboard'],
