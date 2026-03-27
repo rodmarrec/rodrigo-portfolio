@@ -7,15 +7,6 @@ import ProjectModal from './components/ProjectModal'
 import Bio from './components/Bio'
 import './App.css'
 
-const habitTracker = new URL('./assets/habit-tracker.png', import.meta.url).href
-const lastTransmission = new URL('./assets/last-transmission.png', import.meta.url).href
-const travelArcade = new URL('./assets/travel-arcade.png', import.meta.url).href
-const fplForm = new URL('./assets/fpl-form.png', import.meta.url).href
-const fplStats = new URL('./assets/fpl-stats.png', import.meta.url).href
-const heroscapeDark = new URL('./assets/heroscape-dark.png', import.meta.url).href
-const heroscapeLight = new URL('./assets/heroscape-light.png', import.meta.url).href
-const baseHub = new URL('./assets/Base_Hub.png', import.meta.url).href
-
 export const projects = [
   {
     id: 1,
@@ -26,18 +17,18 @@ export const projects = [
     tooling: 'Claude.ai + Airtable MCP, Claude Code, AI Fields',
     inProgress: false,
     group: null,
-    screenshot: lastTransmission,
+    screenshot: '/assets/last-transmission.png',
   },
   {
     id: 2,
     title: 'Base Hub',
-    description: 'Mission control for Rodrigo\'s Airtable universe. 25 nodes registered across 8 classifications — track what\'s active, what\'s archived, and what each base was built to do.',
+    description: "Mission control for Rodrigo's Airtable universe. 25 nodes registered across 8 classifications — track what's active, what's archived, and what each base was built to do.",
     tags: ['Dashboard'],
     embed: 'https://airtable.com/embed/appS9d0XHoJeUFGMi/shrCVIkigswaHQLJe',
     tooling: 'Claude.ai + Airtable MCP',
     inProgress: false,
     group: null,
-    screenshot: baseHub,
+    screenshot: '/assets/Base_Hub.png',
   },
   {
     id: 3,
@@ -48,7 +39,7 @@ export const projects = [
     tooling: 'Claude.ai + Airtable MCP, Omni',
     inProgress: true,
     group: null,
-    screenshot: travelArcade,
+    screenshot: '/assets/travel-arcade.png',
   },
   {
     id: 4,
@@ -59,7 +50,7 @@ export const projects = [
     tooling: 'Claude.ai + Airtable MCP, Omni',
     inProgress: false,
     group: null,
-    screenshot: habitTracker,
+    screenshot: '/assets/habit-tracker.png',
   },
   {
     id: 5,
@@ -71,7 +62,7 @@ export const projects = [
     inProgress: false,
     group: 'FPL Engine',
     groupIndex: 2,
-    screenshot: fplStats,
+    screenshot: '/assets/fpl-stats.png',
   },
   {
     id: 6,
@@ -83,31 +74,31 @@ export const projects = [
     inProgress: false,
     group: 'FPL Engine',
     groupIndex: 1,
-    screenshot: fplForm,
+    screenshot: '/assets/fpl-form.png',
   },
   {
     id: 7,
     title: 'Heroscape Card Index · Dark',
-    description: 'A searchable card explorer for Heroscape — browse all 72 units by species, sort by attack, defense, move, and range, and dig into every card\'s stats and abilities.',
+    description: "A searchable card explorer for Heroscape — browse all 72 units by species, sort by attack, defense, move, and range, and dig into every card's stats and abilities.",
     tags: ['Gaming', 'Dashboard'],
     embed: 'https://airtable.com/embed/appwlovPBiGH0aj7S/shrSKgxrGhO6KP1db',
     tooling: 'Airtable',
     inProgress: false,
     group: 'Heroscape Card Index',
     groupIndex: 1,
-    screenshot: heroscapeDark,
+    screenshot: '/assets/heroscape-dark.png',
   },
   {
     id: 8,
     title: 'Heroscape Card Index · Light',
-    description: 'A searchable card explorer for Heroscape — browse all 72 units by species, sort by attack, defense, move, and range, and dig into every card\'s stats and abilities.',
+    description: "A searchable card explorer for Heroscape — browse all 72 units by species, sort by attack, defense, move, and range, and dig into every card's stats and abilities.",
     tags: ['Gaming', 'Dashboard'],
     embed: 'https://airtable.com/embed/appwlovPBiGH0aj7S/shriZGFXjY0lmkQZV',
     tooling: 'Airtable',
     inProgress: false,
     group: 'Heroscape Card Index',
     groupIndex: 2,
-    screenshot: heroscapeLight,
+    screenshot: '/assets/heroscape-light.png',
   },
 ]
 
