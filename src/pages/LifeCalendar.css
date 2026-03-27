@@ -8,9 +8,9 @@
 .lc-header {
   position: relative;
   z-index: 10;
-  max-width: 1400px;
+  max-width: 1600px;
   margin: 0 auto;
-  padding: 48px 48px 28px;
+  padding: 48px 48px 24px;
 }
 
 .lc-back {
@@ -69,12 +69,12 @@
 .lc-legend {
   position: relative;
   z-index: 10;
-  max-width: 1400px;
+  max-width: 1600px;
   margin: 0 auto;
-  padding: 0 48px 28px;
+  padding: 0 48px 24px;
   display: flex;
   flex-wrap: wrap;
-  gap: 12px 20px;
+  gap: 10px 20px;
 }
 
 .lc-legend-item {
@@ -101,197 +101,199 @@
 .lc-legend-label {
   font-family: var(--font-mono);
   font-size: 11px;
-  color: var(--text-secondary);
+  font-weight: 500;
+  color: rgba(255,255,255,0.7);
   letter-spacing: 0.04em;
 }
 
-/* ── Grid wrapper ── */
+/* ── Grid ── */
 .lc-grid-wrap {
   position: relative;
   z-index: 10;
-  max-width: 1400px;
+  max-width: 1600px;
   margin: 0 auto;
   padding: 0 48px 48px;
   overflow-x: auto;
 }
 
 /* ── Month header row ── */
-.lc-month-headers {
-  display: flex;
-  align-items: center;
-  margin-bottom: 6px;
+.lc-month-header-row {
+  margin-bottom: 4px;
   position: sticky;
   top: 0;
   z-index: 20;
   background: var(--bg);
-  padding: 6px 0 4px;
-  border-bottom: 1px solid var(--border);
+  padding: 6px 0 6px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 
-.lc-row-prefix {
-  width: 72px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  gap: 6px;
+.lc-month-header-group {
+  position: relative;
 }
 
-.lc-month-header {
-  flex: 1;
-  min-width: 36px;
+.lc-month-label {
   font-family: var(--font-mono);
   font-size: 10px;
-  font-weight: 500;
-  color: var(--text-secondary);
-  text-align: center;
-  letter-spacing: 0.06em;
+  font-weight: 700;
+  color: rgba(255,255,255,0.8);
+  letter-spacing: 0.08em;
   text-transform: uppercase;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  white-space: nowrap;
 }
 
 /* ── Row ── */
 .lc-row {
   display: flex;
+  align-items: stretch;
+  margin-bottom: 2px;
+  gap: 1px;
+}
+
+.lc-row-left {
+  display: flex;
   align-items: center;
-  margin-bottom: 3px;
+  gap: 6px;
+  flex-shrink: 0;
+  width: 72px;
 }
 
 .lc-city-bar {
-  width: 5px;
-  min-height: 24px;
+  width: 4px;
   border-radius: 2px;
+  align-self: stretch;
+  min-height: 22px;
   flex-shrink: 0;
 }
 
 .lc-year-label {
   font-family: var(--font-mono);
   font-size: 11px;
-  font-weight: 500;
-  color: var(--text-secondary);
-  width: 36px;
-  flex-shrink: 0;
-  padding-left: 6px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.85);
   letter-spacing: 0.04em;
+  white-space: nowrap;
 }
 
-/* ── Cell ── */
-.lc-cell {
+/* ── Month group (4 weeks) ── */
+.lc-month-group {
+  display: flex;
+  gap: 1px;
   flex: 1;
-  min-width: 36px;
-  height: 24px;
-  border-radius: 3px;
-  margin: 0 1px;
+  position: relative;
+  min-width: 0;
+}
+
+/* ── Week cell ── */
+.lc-week {
+  flex: 1;
+  height: 22px;
+  border-radius: 2px;
   position: relative;
   cursor: default;
-  transition: filter 0.15s, transform 0.12s;
+  transition: filter 0.1s, transform 0.1s;
   display: flex;
   align-items: center;
+  justify-content: center;
+  min-width: 8px;
   overflow: visible;
 }
 
-.lc-cell:hover {
-  filter: brightness(1.35) saturate(1.2);
-  transform: scaleY(1.25);
+.lc-week:hover {
+  filter: brightness(1.4) saturate(1.15);
+  transform: scaleY(1.3);
   z-index: 10;
 }
 
-/* ── Milestone ── */
-.lc-has-milestone {
-  z-index: 5;
+.lc-week-empty {
+  background: rgba(255,255,255,0.025) !important;
+  cursor: default;
 }
+.lc-week-empty:hover { filter: none; transform: none; }
+
+/* ── Milestone ── */
+.lc-milestone-cell { z-index: 4; }
 
 .lc-emoji {
-  font-size: 14px;
+  font-size: 13px;
   line-height: 1;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  filter: drop-shadow(0 0 5px rgba(34,211,238,0.95)) drop-shadow(0 0 10px rgba(34,211,238,0.6));
+  position: relative;
   z-index: 3;
-  filter: drop-shadow(0 0 6px rgba(34, 211, 238, 0.9)) drop-shadow(0 0 12px rgba(34, 211, 238, 0.5));
-  pointer-events: none;
+}
+
+/* ── Sublabel ── */
+.lc-sublabel-cell {
+  outline: 1.5px solid rgba(255,255,255,0.4);
+  outline-offset: -1px;
 }
 
 /* ── Era label ── */
 .lc-era-label {
   position: absolute;
-  left: 4px;
+  left: 2px;
   top: 50%;
   transform: translateY(-50%);
   font-family: var(--font-mono);
-  font-size: 8px;
-  font-weight: 500;
-  color: rgba(0,0,0,0.75);
+  font-size: 7px;
+  font-weight: 700;
   white-space: nowrap;
   pointer-events: none;
   z-index: 2;
-  letter-spacing: 0.04em;
-  text-shadow: none;
-}
-
-/* Light text for dark backgrounds */
-.lc-cell[style*="#ef4444"] .lc-era-label,
-.lc-cell[style*="#2dd4bf"] .lc-era-label,
-.lc-cell[style*="#a78bfa"] .lc-era-label,
-.lc-cell[style*="#c084fc"] .lc-era-label,
-.lc-cell[style*="#94a3b8"] .lc-era-label,
-.lc-cell[style*="#4ade80"] .lc-era-label {
-  color: rgba(255,255,255,0.9);
-}
-
-/* ── Sublabel ── */
-.lc-has-sublabel {
-  outline: 1.5px solid rgba(255,255,255,0.35);
-  outline-offset: -1px;
-}
-
-.lc-sublabel {
-  position: absolute;
-  left: 4px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-family: var(--font-mono);
-  font-size: 8px;
-  font-weight: 500;
-  color: rgba(255,255,255,0.9);
-  white-space: nowrap;
-  pointer-events: none;
-  z-index: 3;
   letter-spacing: 0.03em;
+  color: rgba(0,0,0,0.8);
+  text-shadow: 0 0 4px rgba(255,255,255,0.3);
+}
+
+/* Light label for dark-bg cells */
+.lc-week[style*="#ef4444"] .lc-era-label,
+.lc-week[style*="#2dd4bf"] .lc-era-label,
+.lc-week[style*="#a78bfa"] .lc-era-label,
+.lc-week[style*="#c084fc"] .lc-era-label,
+.lc-week[style*="#94a3b8"] .lc-era-label,
+.lc-week[style*="#4ade80"] .lc-era-label,
+.lc-week[style*="#f472b6"] .lc-era-label,
+.lc-week[style*="#facc15"] .lc-era-label,
+.lc-week[style*="#fb923c"] .lc-era-label {
+  color: rgba(255,255,255,0.95);
+  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
 }
 
 /* ── Tooltip ── */
 .lc-tooltip {
   position: fixed;
   z-index: 1000;
-  background: rgba(8, 8, 20, 0.96);
-  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(6, 6, 16, 0.97);
+  border: 1px solid rgba(255,255,255,0.18);
   border-radius: 10px;
   padding: 12px 16px;
   pointer-events: none;
   min-width: 180px;
   max-width: 260px;
-  backdrop-filter: blur(12px);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(124,109,255,0.1);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.7), 0 0 0 1px rgba(124,109,255,0.15);
 }
 
 .lc-tip-line {
   font-family: var(--font-mono);
   font-size: 12px;
-  color: var(--text-secondary);
+  color: rgba(255,255,255,0.6);
   line-height: 1.75;
 }
 
 .lc-tip-primary {
-  color: var(--text-primary);
-  font-weight: 500;
+  color: #fff;
+  font-weight: 600;
   font-size: 13px;
   margin-bottom: 2px;
 }
 
 /* ── Responsive ── */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .lc-header, .lc-legend, .lc-grid-wrap { padding-left: 16px; padding-right: 16px; }
-  .lc-cell { min-width: 22px; height: 18px; }
-  .lc-month-header { font-size: 8px; min-width: 22px; }
+  .lc-week { height: 16px; min-width: 5px; }
   .lc-year-label { font-size: 9px; }
 }

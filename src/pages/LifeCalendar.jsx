@@ -4,35 +4,40 @@ import { Link } from 'react-router-dom'
 import { events, cities, COLORS, GRID_START, GRID_END, MONTHS } from '../data/lifeData'
 import './LifeCalendar.css'
 
-function toIdx(year, month) {
-  return (year - GRID_START.year) * 12 + (month - GRID_START.month)
-}
-function totalMonths() {
-  return toIdx(GRID_END.year, GRID_END.month)
-}
-function getYears() {
-  const years = []
-  for (let y = GRID_START.year; y <= GRID_END.year; y++) years.push(y)
-  return years
+const WEEKS_PER_MONTH = 4
+
+function toWeekIdx(year, month, week = 0) {
+  const mIdx = (year - GRID_START.year) * 12 + (month - GRID_START.month)
+  return mIdx * WEEKS_PER_MONTH + week
 }
 
-function cityAt(idx) {
+function totalWeeks() {
+  const mIdx = (GRID_END.year - GRID_START.year) * 12 + (GRID_END.month - GRID_START.month)
+  return mIdx * WEEKS_PER_MONTH
+}
+
+function toMonthIdx(year, month) {
+  return (year - GRID_START.year) * 12 + (month - GRID_START.month)
+}
+
+function cityAtMonth(mIdx) {
   for (let i = cities.length - 1; i >= 0; i--) {
     const c = cities[i]
-    const s = toIdx(c.start.year, c.start.month)
-    const e = c.end ? toIdx(c.end.year, c.end.month) : totalMonths() + 1
-    if (idx >= s && idx < e) return c
+    const s = toMonthIdx(c.start.year, c.start.month)
+    const e = c.end ? toMonthIdx(c.end.year, c.end.month) : 99999
+    if (mIdx >= s && mIdx < e) return c
   }
   return null
 }
 
-function eraAt(idx) {
+function eraAtWeek(weekIdx) {
+  const mIdx = Math.floor(weekIdx / WEEKS_PER_MONTH)
   let era = null
   for (const ev of events) {
     if (ev.type !== 'era' && ev.type !== 'overlay') continue
-    const s = toIdx(ev.start.year, ev.start.month)
-    const e = ev.end ? toIdx(ev.end.year, ev.end.month) : totalMonths() + 1
-    if (idx >= s && idx < e) {
+    const s = toMonthIdx(ev.start.year, ev.start.month) * WEEKS_PER_MONTH
+    const e = ev.end ? toMonthIdx(ev.end.year, ev.end.month) * WEEKS_PER_MONTH : 999999
+    if (weekIdx >= s && weekIdx < e) {
       if (ev.type === 'overlay') return ev
       if (!era) era = ev
     }
@@ -40,25 +45,39 @@ function eraAt(idx) {
   return era
 }
 
-function milestonesAt(idx) {
-  return events.filter(ev => ev.type === 'milestone' && toIdx(ev.start.year, ev.start.month) === idx)
+function milestoneAtWeek(weekIdx) {
+  for (const ev of events) {
+    if (ev.type !== 'milestone') continue
+    const s = toWeekIdx(ev.start.year, ev.start.month, 0)
+    const e = s + WEEKS_PER_MONTH
+    if (weekIdx >= s && weekIdx < e) return ev
+  }
+  return null
 }
 
-function sublabelsAt(idx) {
-  return events.filter(ev => {
-    if (ev.type !== 'sublabel') return false
-    const s = toIdx(ev.start.year, ev.start.month)
-    const e = toIdx(ev.end.year, ev.end.month)
-    return idx >= s && idx <= e
-  })
+function sublabelAtWeek(weekIdx) {
+  for (const ev of events) {
+    if (ev.type !== 'sublabel') continue
+    const s = toMonthIdx(ev.start.year, ev.start.month) * WEEKS_PER_MONTH
+    const e = toMonthIdx(ev.end.year, ev.end.month) * WEEKS_PER_MONTH + WEEKS_PER_MONTH
+    if (weekIdx >= s && weekIdx < e) return ev
+  }
+  return null
 }
 
-// Era label: show at the start month of each era
-function eraLabelAt(idx) {
-  return events.find(ev => {
-    if (ev.type !== 'era' || !ev.label) return false
-    return toIdx(ev.start.year, ev.start.month) === idx
-  })
+function eraStartAtWeek(weekIdx) {
+  for (const ev of events) {
+    if (ev.type !== 'era' || !ev.label) continue
+    const s = toMonthIdx(ev.start.year, ev.start.month) * WEEKS_PER_MONTH
+    if (weekIdx === s) return ev
+  }
+  return null
+}
+
+function getYears() {
+  const years = []
+  for (let y = GRID_START.year; y <= GRID_END.year; y++) years.push(y)
+  return years
 }
 
 const legendItems = [
@@ -78,41 +97,49 @@ const legendItems = [
 export default function LifeCalendar() {
   const [tooltip, setTooltip] = useState(null)
   const years = getYears()
-  const total = totalMonths()
 
-  const cells = useMemo(() => {
-    const result = []
-    for (let i = 0; i < total; i++) {
-      const absMonth = GRID_START.month - 1 + i
-      const year = GRID_START.year + Math.floor(absMonth / 12)
-      const month = (absMonth % 12) + 1
-      result.push({
-        i, year, month,
-        city: cityAt(i),
-        era: eraAt(i),
-        milestones: milestonesAt(i),
-        sublabels: sublabelsAt(i),
-        eraLabel: eraLabelAt(i),
-      })
-    }
-    return result
+  // Build rows by year
+  const rows = useMemo(() => {
+    return years.map(year => {
+      // For each month in year, build 4 week cells
+      const startMonth = year === GRID_START.year ? GRID_START.month : 1
+      const endMonth = year === GRID_END.year ? GRID_END.month : 12
+
+      const months = []
+      for (let m = 1; m <= 12; m++) {
+        const weeks = []
+        for (let w = 0; w < WEEKS_PER_MONTH; w++) {
+          const mIdx = toMonthIdx(year, m)
+          const weekIdx = mIdx * WEEKS_PER_MONTH + w
+
+          if (m < startMonth || m > endMonth) {
+            weeks.push({ empty: true, weekIdx })
+            continue
+          }
+
+          const era = eraAtWeek(weekIdx)
+          const milestone = milestoneAtWeek(weekIdx)
+          const sublabel = sublabelAtWeek(weekIdx)
+          const eraStart = w === 0 ? eraStartAtWeek(weekIdx) : null
+
+          weeks.push({ weekIdx, era, milestone, sublabel, eraStart, empty: false, month: m, week: w })
+        }
+        months.push({ month: m, weeks })
+      }
+
+      // City for left bar
+      const mIdx = toMonthIdx(year, startMonth)
+      const city = cityAtMonth(mIdx)
+
+      return { year, months, city, startMonth, endMonth }
+    })
   }, [])
-
-  const byYear = useMemo(() => {
-    const map = {}
-    for (const cell of cells) {
-      if (!map[cell.year]) map[cell.year] = []
-      map[cell.year].push(cell)
-    }
-    return map
-  }, [cells])
 
   function buildTooltip(cell) {
     const lines = []
+    if (cell.milestone) lines.push(`${cell.milestone.emoji} ${cell.milestone.label}`)
+    if (cell.sublabel) lines.push(cell.sublabel.label)
     if (cell.era) lines.push(cell.era.label || '')
-    cell.sublabels.forEach(s => lines.push(s.label))
-    cell.milestones.forEach(m => lines.push(`${m.emoji} ${m.label}`))
-    if (cell.city) lines.push(`📍 ${cell.city.label}`)
     return lines.filter(Boolean)
   }
 
@@ -124,9 +151,9 @@ export default function LifeCalendar() {
 
       <motion.div className="lc-header" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
         <Link to="/" className="lc-back">← Back to portfolio</Link>
-        <div className="lc-eyebrow">Life in Months</div>
+        <div className="lc-eyebrow">Life in Weeks</div>
         <h1 className="lc-title">Rodrigo's Life Calendar</h1>
-        <p className="lc-sub">Every month since June 1989 — cities, careers, milestones, and everything in between.</p>
+        <p className="lc-sub">Every week since June 1989 — cities, careers, milestones, and everything in between.</p>
       </motion.div>
 
       <motion.div className="lc-legend" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, delay: 0.15 }}>
@@ -144,76 +171,58 @@ export default function LifeCalendar() {
 
       <motion.div className="lc-grid-wrap" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, delay: 0.25 }}>
         {/* Month headers */}
-        <div className="lc-month-headers">
-          <div className="lc-row-prefix" />
+        <div className="lc-month-row lc-month-header-row">
+          <div className="lc-row-left" />
           {MONTHS.map(m => (
-            <div key={m} className="lc-month-header">{m}</div>
+            <div key={m} className="lc-month-group lc-month-header-group">
+              <span className="lc-month-label">{m}</span>
+            </div>
           ))}
         </div>
 
-        {years.map(year => {
-          const rowCells = byYear[year]
-          if (!rowCells || rowCells.length === 0) return null
-
-          // City bar: gradient if city changes mid-year
-          const uniqueCities = [...new Set(rowCells.map(c => c.city?.color).filter(Boolean))]
-          const cityBarStyle = uniqueCities.length > 1
-            ? { background: `linear-gradient(to bottom, ${uniqueCities[0]}, ${uniqueCities[uniqueCities.length - 1]})` }
-            : { background: uniqueCities[0] || 'transparent' }
-
-          const startMonth = rowCells[0].month
-          const endMonth = rowCells[rowCells.length - 1].month
-
-          return (
-            <div key={year} className="lc-row">
-              {/* Year label + city bar */}
-              <div className="lc-row-prefix">
-                <div className="lc-city-bar" style={cityBarStyle} />
-                <div className="lc-year-label">{year}</div>
-              </div>
-
-              {/* Pad start */}
-              {startMonth > 1 && Array.from({ length: startMonth - 1 }).map((_, pi) => (
-                <div key={`ps-${pi}`} className="lc-cell" style={{ background: 'rgba(255,255,255,0.02)' }} />
-              ))}
-
-              {rowCells.map(cell => {
-                const bg = cell.era ? cell.era.color : 'rgba(255,255,255,0.04)'
-                const hasMilestone = cell.milestones.length > 0
-                const hasSublabel = cell.sublabels.length > 0
-                const showEraLabel = cell.eraLabel && cell.eraLabel.label
-                const tips = buildTooltip(cell)
-                const isSublabelStart = hasSublabel && toIdx(cell.sublabels[0].start.year, cell.sublabels[0].start.month) === cell.i
-
-                return (
-                  <div
-                    key={cell.i}
-                    className={`lc-cell${hasMilestone ? ' lc-has-milestone' : ''}${hasSublabel ? ' lc-has-sublabel' : ''}`}
-                    style={{ background: bg }}
-                    onMouseEnter={e => tips.length > 0 && setTooltip({ x: e.clientX, y: e.clientY, lines: tips })}
-                    onMouseMove={e => tips.length > 0 && setTooltip(t => t ? { ...t, x: e.clientX, y: e.clientY } : null)}
-                    onMouseLeave={() => setTooltip(null)}
-                  >
-                    {hasMilestone && (
-                      <span className="lc-emoji">{cell.milestones[0].emoji}</span>
-                    )}
-                    {!hasMilestone && showEraLabel && (
-                      <span className="lc-era-label">{cell.eraLabel.label}</span>
-                    )}
-                    {!hasMilestone && !showEraLabel && hasSublabel && isSublabelStart && (
-                      <span className="lc-sublabel">{cell.sublabels[0].label}</span>
-                    )}
-                  </div>
-                )
-              })}
-
-              {/* Pad end */}
-              {endMonth < 12 && Array.from({ length: 12 - endMonth }).map((_, pi) => (
-                <div key={`pe-${pi}`} className="lc-cell" style={{ background: 'rgba(255,255,255,0.02)' }} />
-              ))}
+        {/* Year rows */}
+        {rows.map(row => (
+          <div key={row.year} className="lc-row">
+            <div className="lc-row-left">
+              <div
+                className="lc-city-bar"
+                style={{ background: row.city?.color || 'rgba(255,255,255,0.1)' }}
+                title={row.city?.label}
+              />
+              <span className="lc-year-label">{row.year}</span>
             </div>
-          )
-        })}
+
+            {row.months.map(({ month, weeks }) => (
+              <div key={month} className="lc-month-group">
+                {weeks.map(cell => {
+                  if (cell.empty) return <div key={cell.weekIdx} className="lc-week lc-week-empty" />
+
+                  const bg = cell.era ? cell.era.color : 'rgba(255,255,255,0.05)'
+                  const hasMilestone = !!cell.milestone
+                  const hasSublabel = !!cell.sublabel && !hasMilestone
+                  const showLabel = cell.eraStart && cell.eraStart.label && cell.week === 0
+                  const tips = buildTooltip(cell)
+
+                  return (
+                    <div
+                      key={cell.weekIdx}
+                      className={`lc-week${hasMilestone ? ' lc-milestone-cell' : ''}${hasSublabel ? ' lc-sublabel-cell' : ''}`}
+                      style={{ background: bg }}
+                      onMouseEnter={e => tips.length > 0 && setTooltip({ x: e.clientX, y: e.clientY, lines: tips })}
+                      onMouseMove={e => tips.length > 0 && setTooltip(t => t ? { ...t, x: e.clientX, y: e.clientY } : null)}
+                      onMouseLeave={() => setTooltip(null)}
+                    >
+                      {hasMilestone && <span className="lc-emoji">{cell.milestone.emoji}</span>}
+                      {showLabel && !hasMilestone && (
+                        <span className="lc-era-label">{cell.eraStart.label}</span>
+                      )}
+                    </div>
+                  )
+                })}
+              </div>
+            ))}
+          </div>
+        ))}
       </motion.div>
 
       {tooltip && (
