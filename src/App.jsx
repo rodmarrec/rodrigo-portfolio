@@ -1,10 +1,11 @@
-import { useState } from 'react'
+import { useState, useRef, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Header from './components/Header'
 import FilterBar from './components/FilterBar'
 import ProjectCard from './components/ProjectCard'
 import ProjectModal from './components/ProjectModal'
 import Bio from './components/Bio'
+import CursorGlow from './components/CursorGlow'
 import './App.css'
 
 export const projects = [
@@ -107,10 +108,26 @@ const allTags = ['All', 'Dashboard', 'Gaming', 'Personal', 'Sports']
 export default function App() {
   const [activeTag, setActiveTag] = useState('All')
   const [selectedProject, setSelectedProject] = useState(null)
+  const gridRef = useRef(null)
 
   const filtered = activeTag === 'All'
     ? projects
     : projects.filter(p => p.tags.includes(activeTag))
+
+  const counts = useMemo(() => {
+    const c = { All: projects.length }
+    allTags.slice(1).forEach(tag => {
+      c[tag] = projects.filter(p => p.tags.includes(tag)).length
+    })
+    return c
+  }, [])
+
+  const handleTagSelect = (tag) => {
+    setActiveTag(tag)
+    setTimeout(() => {
+      gridRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }, 50)
+  }
 
   return (
     <div className="app">
@@ -118,29 +135,46 @@ export default function App() {
       <div className="bg-glow glow-1" />
       <div className="bg-glow glow-2" />
       <div className="bg-glow glow-3" />
+      <CursorGlow />
 
       <Header />
       <Bio />
 
       <main className="main">
-        <FilterBar tags={allTags} activeTag={activeTag} onSelect={setActiveTag} />
+        <FilterBar
+          tags={allTags}
+          activeTag={activeTag}
+          onSelect={handleTagSelect}
+          counts={counts}
+        />
 
-        <motion.div className="grid" layout>
-          <AnimatePresence mode="popLayout">
-            {filtered.map((project, i) => (
-              <ProjectCard
-                key={project.id}
-                project={project}
-                index={i}
-                onClick={() => setSelectedProject(project)}
-              />
-            ))}
-          </AnimatePresence>
-        </motion.div>
+        <div ref={gridRef} style={{ scrollMarginTop: '80px' }}>
+          <motion.div className="grid" layout>
+            <AnimatePresence mode="popLayout">
+              {filtered.map((project, i) => (
+                <ProjectCard
+                  key={project.id}
+                  project={project}
+                  index={i}
+                  onClick={() => setSelectedProject(project)}
+                />
+              ))}
+            </AnimatePresence>
+          </motion.div>
+        </div>
       </main>
 
       <footer className="footer">
         <span>Rodrigo · Interface Studio</span>
+        <span className="footer-dot">·</span>
+        <a
+          href="https://www.linkedin.com/in/rodrigo-marron/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="footer-link"
+        >
+          LinkedIn
+        </a>
         <span className="footer-dot">·</span>
         <span>Built with Airtable + Claude</span>
       </footer>

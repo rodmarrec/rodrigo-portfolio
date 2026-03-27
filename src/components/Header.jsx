@@ -19,6 +19,25 @@ export default function Header() {
         No-code interfaces built with Airtable + Claude —
         dashboards, games, trackers, and tools that make data feel alive.
       </p>
+
+      <div className="header-stats">
+        <div className="stat">
+          <span className="stat-num">8</span>
+          <span className="stat-label">Interfaces</span>
+        </div>
+        <div className="stat">
+          <span className="stat-num">6+</span>
+          <span className="stat-label">Years of Airtable</span>
+        </div>
+        <div className="stat">
+          <span className="stat-num">4</span>
+          <span className="stat-label">Companies</span>
+        </div>
+        <div className="stat now-playing">
+          <span className="now-dot" />
+          <span className="stat-label">Never a quiet day in Airtable</span>
+        </div>
+      </div>
     </motion.header>
   )
 }

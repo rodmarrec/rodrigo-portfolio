@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 
-export default function FilterBar({ tags, activeTag, onSelect }) {
+export default function FilterBar({ tags, activeTag, onSelect, counts }) {
   return (
     <motion.div
       className="filter-bar"
@@ -15,6 +15,9 @@ export default function FilterBar({ tags, activeTag, onSelect }) {
           onClick={() => onSelect(tag)}
         >
           {tag}
+          {counts[tag] !== undefined && (
+            <span className="filter-count">{counts[tag]}</span>
+          )}
         </button>
       ))}
     </motion.div>
