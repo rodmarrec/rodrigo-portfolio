@@ -4,7 +4,6 @@
   padding-bottom: 80px;
 }
 
-/* ── Header ── */
 .lc-header {
   position: relative;
   z-index: 10;
@@ -101,12 +100,12 @@
 .lc-legend-label {
   font-family: var(--font-mono);
   font-size: 11px;
-  font-weight: 500;
-  color: rgba(255,255,255,0.7);
+  font-weight: 700;
+  color: rgba(255,255,255,0.75);
   letter-spacing: 0.04em;
 }
 
-/* ── Grid ── */
+/* ── Grid wrapper ── */
 .lc-grid-wrap {
   position: relative;
   z-index: 10;
@@ -116,33 +115,17 @@
   overflow-x: auto;
 }
 
-/* ── Month header row ── */
-.lc-month-header-row {
-  margin-bottom: 4px;
+/* ── Header row ── */
+.lc-header-row {
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 6px;
   position: sticky;
   top: 0;
   z-index: 20;
   background: var(--bg);
-  padding: 6px 0 6px;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-}
-
-.lc-month-header-group {
-  position: relative;
-}
-
-.lc-month-label {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  font-weight: 700;
-  color: rgba(255,255,255,0.8);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  white-space: nowrap;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
 /* ── Row ── */
@@ -150,7 +133,6 @@
   display: flex;
   align-items: stretch;
   margin-bottom: 2px;
-  gap: 1px;
 }
 
 .lc-row-left {
@@ -158,7 +140,7 @@
   align-items: center;
   gap: 6px;
   flex-shrink: 0;
-  width: 72px;
+  width: 68px;
 }
 
 .lc-city-bar {
@@ -173,18 +155,43 @@
   font-family: var(--font-mono);
   font-size: 11px;
   font-weight: 700;
-  color: rgba(255,255,255,0.85);
+  color: rgba(255,255,255,0.9);
   letter-spacing: 0.04em;
   white-space: nowrap;
 }
 
-/* ── Month group (4 weeks) ── */
-.lc-month-group {
+/* ── Month column (holds label + 4 week cells) ── */
+.lc-month-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 0 1px;
+}
+
+.lc-month-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.85);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
+  display: block;
+  margin-bottom: 4px;
+  white-space: nowrap;
+}
+
+.lc-month-weeks {
   display: flex;
   gap: 1px;
+}
+
+.lc-week-header {
   flex: 1;
-  position: relative;
-  min-width: 0;
+  height: 4px;
+  border-radius: 1px;
+  background: rgba(255,255,255,0.1);
 }
 
 /* ── Week cell ── */
@@ -198,21 +205,21 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 8px;
   overflow: visible;
+  min-width: 0;
 }
 
 .lc-week:hover {
-  filter: brightness(1.4) saturate(1.15);
+  filter: brightness(1.4) saturate(1.1);
   transform: scaleY(1.3);
   z-index: 10;
 }
 
-.lc-week-empty {
-  background: rgba(255,255,255,0.025) !important;
+.lc-week-void {
+  background: rgba(255,255,255,0.02) !important;
   cursor: default;
 }
-.lc-week-empty:hover { filter: none; transform: none; }
+.lc-week-void:hover { filter: none; transform: none; }
 
 /* ── Milestone ── */
 .lc-milestone-cell { z-index: 4; }
@@ -225,16 +232,16 @@
   z-index: 3;
 }
 
-/* ── Sublabel ── */
+/* ── Sublabel outline ── */
 .lc-sublabel-cell {
   outline: 1.5px solid rgba(255,255,255,0.4);
   outline-offset: -1px;
 }
 
-/* ── Era label ── */
+/* ── Era / sublabel text ── */
 .lc-era-label {
   position: absolute;
-  left: 2px;
+  left: 3px;
   top: 50%;
   transform: translateY(-50%);
   font-family: var(--font-mono);
@@ -243,23 +250,7 @@
   white-space: nowrap;
   pointer-events: none;
   z-index: 2;
-  letter-spacing: 0.03em;
-  color: rgba(0,0,0,0.8);
-  text-shadow: 0 0 4px rgba(255,255,255,0.3);
-}
-
-/* Light label for dark-bg cells */
-.lc-week[style*="#ef4444"] .lc-era-label,
-.lc-week[style*="#2dd4bf"] .lc-era-label,
-.lc-week[style*="#a78bfa"] .lc-era-label,
-.lc-week[style*="#c084fc"] .lc-era-label,
-.lc-week[style*="#94a3b8"] .lc-era-label,
-.lc-week[style*="#4ade80"] .lc-era-label,
-.lc-week[style*="#f472b6"] .lc-era-label,
-.lc-week[style*="#facc15"] .lc-era-label,
-.lc-week[style*="#fb923c"] .lc-era-label {
-  color: rgba(255,255,255,0.95);
-  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  letter-spacing: 0.04em;
 }
 
 /* ── Tooltip ── */
@@ -286,14 +277,14 @@
 
 .lc-tip-primary {
   color: #fff;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 13px;
   margin-bottom: 2px;
 }
 
-/* ── Responsive ── */
 @media (max-width: 900px) {
   .lc-header, .lc-legend, .lc-grid-wrap { padding-left: 16px; padding-right: 16px; }
-  .lc-week { height: 16px; min-width: 5px; }
+  .lc-week { height: 16px; }
   .lc-year-label { font-size: 9px; }
+  .lc-month-label { font-size: 8px; }
 }
