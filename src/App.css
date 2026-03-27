@@ -685,3 +685,25 @@ body {
   gap: 6px;
   flex-shrink: 0;
 }
+
+/* ── Header Nav ── */
+.header-nav {
+  margin-top: 24px;
+}
+
+.header-nav-link {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--accent);
+  text-decoration: none;
+  letter-spacing: 0.08em;
+  border: 1px solid rgba(124, 109, 255, 0.3);
+  padding: 8px 16px;
+  border-radius: 100px;
+  transition: all 0.2s;
+  display: inline-block;
+}
+.header-nav-link:hover {
+  background: rgba(124, 109, 255, 0.1);
+  border-color: var(--accent);
+}

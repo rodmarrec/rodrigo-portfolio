@@ -1,0 +1,269 @@
+.lc-page {
+  position: relative;
+  min-height: 100vh;
+  padding-bottom: 80px;
+  overflow-x: auto;
+}
+
+/* ── Header ── */
+.lc-header {
+  position: relative;
+  z-index: 10;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 48px 48px 32px;
+}
+
+.lc-back {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 24px;
+  transition: color 0.2s;
+}
+.lc-back:hover { color: var(--accent); }
+
+.lc-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.lc-eyebrow::before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 1px;
+  background: var(--accent);
+}
+
+.lc-title {
+  font-size: clamp(32px, 5vw, 64px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+  margin-bottom: 16px;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 60%, var(--accent-3) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.lc-sub {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  max-width: 560px;
+}
+
+/* ── Legend ── */
+.lc-legend {
+  position: relative;
+  z-index: 10;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 48px 32px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 24px;
+}
+
+.lc-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.lc-legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.lc-legend-city {
+  width: 6px;
+  height: 14px;
+  border-radius: 2px;
+  background: linear-gradient(to bottom, #9a3412, #fdba74);
+  flex-shrink: 0;
+}
+
+.lc-legend-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-secondary);
+  letter-spacing: 0.05em;
+}
+
+/* ── Grid ── */
+.lc-grid-wrap {
+  position: relative;
+  z-index: 10;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 48px;
+  overflow-x: auto;
+}
+
+.lc-month-headers {
+  display: flex;
+  align-items: center;
+  margin-bottom: 4px;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--bg);
+  padding: 8px 0 4px;
+}
+
+.lc-year-label-spacer {
+  width: 44px;
+  flex-shrink: 0;
+}
+
+.lc-city-spacer {
+  width: 6px;
+  flex-shrink: 0;
+  margin-right: 2px;
+}
+
+.lc-month-header {
+  flex: 1;
+  min-width: 28px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--text-muted);
+  text-align: center;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* ── Row ── */
+.lc-row {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 2px;
+}
+
+.lc-year-label {
+  width: 44px;
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+  padding-right: 6px;
+  text-align: right;
+}
+
+.lc-city-bar {
+  width: 4px;
+  height: 18px;
+  border-radius: 1px;
+  flex-shrink: 0;
+  margin-right: 4px;
+  opacity: 0.9;
+}
+
+/* ── Cell ── */
+.lc-cell {
+  flex: 1;
+  min-width: 28px;
+  height: 18px;
+  border-radius: 2px;
+  margin: 0 1px;
+  position: relative;
+  cursor: default;
+  transition: filter 0.15s, transform 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+}
+
+.lc-cell:hover {
+  filter: brightness(1.3);
+  transform: scaleY(1.2);
+  z-index: 10;
+}
+
+.lc-cell-empty {
+  background: rgba(255,255,255,0.02) !important;
+  cursor: default;
+}
+.lc-cell-empty:hover {
+  filter: none;
+  transform: none;
+}
+
+/* ── Milestone dot ── */
+.lc-milestone-dot {
+  font-size: 11px;
+  line-height: 1;
+  position: relative;
+  z-index: 2;
+  filter: drop-shadow(0 0 4px rgba(6, 182, 212, 0.8));
+}
+
+/* ── Sublabel ── */
+.lc-cell-sublabel {
+  outline: 1px solid rgba(255,255,255,0.25);
+  outline-offset: -1px;
+}
+
+.lc-sublabel-text {
+  position: absolute;
+  left: 2px;
+  font-family: var(--font-mono);
+  font-size: 7px;
+  color: rgba(255,255,255,0.7);
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 3;
+  letter-spacing: 0.02em;
+}
+
+/* ── Tooltip ── */
+.lc-tooltip {
+  position: fixed;
+  z-index: 1000;
+  background: rgba(10, 10, 20, 0.95);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px;
+  padding: 10px 14px;
+  pointer-events: none;
+  min-width: 160px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+}
+
+.lc-tooltip-line {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-primary);
+  line-height: 1.7;
+}
+.lc-tooltip-line:first-child {
+  color: var(--accent);
+  font-weight: 500;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .lc-header, .lc-legend, .lc-grid-wrap { padding-left: 16px; padding-right: 16px; }
+  .lc-cell { min-width: 18px; height: 14px; }
+  .lc-month-header { font-size: 7px; min-width: 18px; }
+}

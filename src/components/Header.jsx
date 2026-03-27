@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 
 export default function Header() {
   return (
@@ -19,6 +20,12 @@ export default function Header() {
         No-code interfaces built with Airtable + Claude —
         dashboards, games, trackers, and tools that make data feel alive.
       </p>
+
+      <div className="header-nav">
+        <Link to="/life" className="header-nav-link">
+          Life Calendar →
+        </Link>
+      </div>
     </motion.header>
   )
 }
