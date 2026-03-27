@@ -1,4 +1,4 @@
-import { useState, useRef, useMemo } from 'react'
+import { useState, useRef, useMemo, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Header from './components/Header'
 import FilterBar from './components/FilterBar'
@@ -108,7 +108,13 @@ const allTags = ['All', 'Dashboard', 'Gaming', 'Personal', 'Sports']
 export default function App() {
   const [activeTag, setActiveTag] = useState('All')
   const [selectedProject, setSelectedProject] = useState(null)
+  const [isDark, setIsDark] = useState(true)
   const gridRef = useRef(null)
+
+  // Apply theme to root element
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light')
+  }, [isDark])
 
   const filtered = activeTag === 'All'
     ? projects
@@ -137,7 +143,7 @@ export default function App() {
       <div className="bg-glow glow-3" />
       <CursorGlow />
 
-      <Header />
+      <Header isDark={isDark} onToggleTheme={() => setIsDark(d => !d)} />
       <Bio />
 
       <main className="main">
